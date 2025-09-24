@@ -1,0 +1,10 @@
+🧺 Laundry Receipt
+Order ID: 30cdf16b-308d-4dc1-a0f3-bf94ffc4dcbb
+Item Type: shirt
+Quantity: 2
+Total: ₹100.0
+Status: Cancelled
+Date: 2025-07-13 12:42
+Hostel: A-Block
+Room: F1-78
+Pickup Slot: 8:00 AM - 10:00 AM

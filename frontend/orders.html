@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Laundry Orders</title>
+
+  <!-- Quicksand Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="/static/js/orders.js" defer></script>
+
+  <style>
+    body.orders {
+      font-family: 'Quicksand', sans-serif;
+      background: url('https://images.unsplash.com/photo-1702411126467-e11cc585abd3?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      padding: 40px 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 30px;
+      margin: auto;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      text-align: center;
+      color: #0d6efd;
+      font-size: 2rem;
+      margin-bottom: 25px;
+    }
+
+    .order-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      background-color: #fefefe;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .status-pending {
+      background-color: #f0ad4e;
+      color: white;
+      border-radius: 6px;
+      padding: 4px 10px;
+      display: inline-block;
+    }
+
+    .status-completed {
+      background-color: #28a745;
+      color: white;
+      border-radius: 6px;
+      padding: 4px 10px;
+      display: inline-block;
+    }
+
+    .status-cancelled {
+      background-color: #dc3545;
+      color: white;
+      border-radius: 6px;
+      padding: 4px 10px;
+      display: inline-block;
+    }
+
+    #logout {
+      margin-top: 30px;
+      background-color: #dc3545;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #logout:hover {
+      background-color: #b02a37;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-link a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    .cancel-btn {
+      padding: 6px 12px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .cancel-btn:hover {
+      background-color: #c82333;
+    }
+
+    .feedback-input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .submit-feedback {
+      background-color: #007bff;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .submit-feedback:hover {
+      background-color: #0056b3;
+    }
+
+    .notification {
+      background-color: #e6f4ea;
+      border: 1px solid #a8e0b8;
+      color: #0c5c25;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    #filterForm {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #filterForm select, #filterForm button {
+      padding: 8px 12px;
+      margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: bold;
+    }
+
+    #filterForm button {
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #filterForm button:hover {
+      background-color: #0049c2;
+    }
+  </style>
+</head>
+
+<body class="orders">
+  <div class="container">
+    <h2>My Orders</h2>
+
+    <div id="notificationBox"></div>
+
+    <!-- Filter Section -->
+    <form id="filterForm">
+      <label for="month">Month:</label>
+      <select id="month">
+        <option value="">All</option>
+        <option value="1">Jan</option>
+        <option value="2">Feb</option>
+        <option value="3">Mar</option>
+        <option value="4">Apr</option>
+        <option value="5">May</option>
+        <option value="6">Jun</option>
+        <option value="7">Jul</option>
+        <option value="8">Aug</option>
+        <option value="9">Sep</option>
+        <option value="10">Oct</option>
+        <option value="11">Nov</option>
+        <option value="12">Dec</option>
+      </select>
+
+      <label for="year">Year:</label>
+      <select id="year">
+        <option value="">All</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+      </select>
+
+      <button type="submit">Filter</button>
+    </form>
+
+    <!-- Orders Display -->
+    <div id="orderList"></div>
+
+    <button id="logout">Logout</button>
+
+    <div class="back-link">
+      <a href="/dashboard.html">← Back to Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

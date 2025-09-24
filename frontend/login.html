@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Laundry App - Login</title>
+
+  <!-- Quicksand Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+
+  <style>
+    body.login {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: url('https://images.unsplash.com/photo-1675329585872-c247d01f7668?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 35px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h2 {
+      font-size: 2rem;
+      text-align: center;
+      color: #1e3d59;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f7f7f7;
+      font-size: 15px;
+      font-family: 'Quicksand', sans-serif;
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #00a8cc;
+      outline: none;
+      background-color: #fff;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: none;
+      border: none;
+      color: #00a8cc;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .remember-me {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 13px;
+      font-size: 16px;
+      background-color: #00a8cc;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-family: 'Quicksand', sans-serif;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #008fb3;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    p a {
+      color: #00a8cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    p a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px 20px;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="login">
+  <div class="container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <input type="text" id="username" placeholder="Username" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="button" class="toggle-password" onclick="togglePassword()">👁</button>
+      </div>
+
+      <label class="remember-me">
+        <input type="checkbox" id="rememberMe"> Remember Me
+      </label>
+
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="/register.html">Register here</a></p>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById('password');
+      pwd.type = pwd.type === 'password' ? 'text' : 'password';
+    }
+
+    window.onload = () => {
+      const savedUsername = localStorage.getItem('savedUsername');
+      const savedPassword = localStorage.getItem('savedPassword');
+      const remember = localStorage.getItem('rememberMe') === 'true';
+
+      if (remember && savedUsername && savedPassword) {
+        document.getElementById('username').value = savedUsername;
+        document.getElementById('password').value = savedPassword;
+        document.getElementById('rememberMe').checked = true;
+      }
+    };
+
+    document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const remember = document.getElementById('rememberMe').checked;
+
+      if (!username || !password) {
+        alert('Please enter both username and password.');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:8000/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (!response.ok) {
+          alert("Login failed: Invalid credentials.");
+          return;
+        }
+
+        const data = await response.json();
+
+        if (data.user_id) {
+          localStorage.setItem('user_id', data.user_id);
+          localStorage.setItem('is_admin', data.role === 'admin' ? 'true' : 'false');
+          localStorage.setItem('role', data.role);
+          localStorage.setItem('user', JSON.stringify(data));
+
+          if (remember) {
+            localStorage.setItem('savedUsername', username);
+            localStorage.setItem('savedPassword', password);
+            localStorage.setItem('rememberMe', 'true');
+          } else {
+            localStorage.removeItem('savedUsername');
+            localStorage.removeItem('savedPassword');
+            localStorage.setItem('rememberMe', 'false');
+          }
+
+          window.location.href = data.role === 'admin' ? '/admin.html' : '/dashboard.html';
+        } else {
+          alert("Login failed: Unexpected error.");
+        }
+
+      } catch (error) {
+        console.error("Login error:", error);
+        alert("An error occurred during login.");
+      }
+    });
+  </script>
+</body>
+</html>

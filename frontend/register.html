@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Laundry App - Register</title>
+
+  <!-- Quicksand Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="/static/css/styles.css">
+
+  <style>
+    body.register {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: url('https://plus.unsplash.com/premium_photo-1679056835084-7f21e64a3402?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 35px 40px;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      color: #1e3d59;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px 15px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f7f7f7;
+      font-family: 'Quicksand', sans-serif;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #00a8cc;
+      outline: none;
+      background: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #00a8cc;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    button:hover {
+      background-color: #008fb3;
+    }
+
+    p {
+      margin-top: 20px;
+      color: #333;
+    }
+
+    a {
+      color: #00a8cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px 20px;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="register">
+  <div class="container">
+    <h2>Create Your Account</h2>
+    <form id="registerForm">
+      <div class="form-group">
+        <input type="text" id="username" placeholder="Username" required>
+      </div>
+
+      <div class="form-group">
+        <input type="email" id="email" placeholder="Email" required>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="phone" placeholder="Phone" required>
+      </div>
+
+      <div class="form-group">
+        <select id="plan" required>
+          <option value="">Select Plan</option>
+          <option value="Basic">Basic</option>
+          <option value="Premium">Premium</option>
+        </select>
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="/login.html">Login here</a></p>
+  </div>
+
+  <script>
+    document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const plan = document.getElementById('plan').value;
+
+      if (!username || !email || !password || !phone || !plan) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      const response = await fetch("http://localhost:8000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password, phone, plan })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Registration successful! Redirecting to login...");
+        window.location.href = "/login.html";
+      } else {
+        alert(data.detail || "Registration failed.");
+      }
+    });
+  </script>
+</body>
+</html>

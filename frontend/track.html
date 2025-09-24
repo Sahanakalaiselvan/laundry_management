@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Track Order</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="/static/js/track.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body.track {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: url('https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px 30px;
+      border-radius: 20px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #f5a623; /* Different vibrant heading color */
+    }
+
+    .info {
+      font-size: 15px;
+      color: #dddddd;
+      margin-bottom: 25px;
+    }
+
+    #notificationBox {
+      margin: 10px 0;
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: none;
+      background: #f1f1f1;
+      color: #333;
+      margin-bottom: 18px;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #28a745;
+      color: white;
+      transition: 0.3s ease;
+      margin-bottom: 15px;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    button:hover {
+      background-color: #218838;
+      transform: scale(1.03);
+    }
+
+    #logout {
+      background-color: #dc3545;
+    }
+
+    #logout:hover {
+      background-color: #b02a37;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 12px;
+      font-size: 14px;
+      color: #f8f9fa;
+      text-decoration: underline;
+    }
+
+    #result {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-top: 15px;
+      line-height: 1.6;
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="track">
+  <div class="container">
+    <h2>Track Your Order</h2>
+    <p class="info">Paste your <strong>Order ID (UUID)</strong> shown in the dashboard to track status.</p>
+
+    <div id="notificationBox"></div>
+
+    <input type="text" id="orderId" placeholder="Enter Order ID (UUID)">
+    <button id="trackBtn">Track</button>
+    <div id="result"></div>
+
+    <button id="logout">Logout</button>
+    <a href="/dashboard.html" class="back-link">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

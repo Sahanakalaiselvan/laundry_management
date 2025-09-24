@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Call Me Donkey - Laundry App</title>
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: url('https://thumbs.dreamstime.com/b/cool-neon-party-donkey-headphones-sunglasses-generative-ai-listening-music-pop-art-style-colors-267684376.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px 50px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 700px;
+      width: 90%;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 60px;
+      color: #00f5ff;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 30px;
+      color: #f0f0f0;
+      font-weight: 600;
+    }
+
+    a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid #ffffff;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      transition: 0.3s ease;
+    }
+
+    a:hover {
+      background: #1abc9c;
+      color: #000;
+    }
+
+    .quote {
+      font-size: 22px;
+      font-style: italic;
+      color: #ffdede;
+      margin-top: 35px;
+      font-family: 'Playfair Display', serif;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: slideUp 1.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 40px; }
+      h2 { font-size: 20px; }
+      a  { font-size: 14px; padding: 10px 20px; }
+      .quote { font-size: 18px; }
+      .overlay { padding: 30px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay">
+    <div class="container">
+      <h1>Call Me Donkey</h1>
+      <h2>Welcome to Laundry Pickup & Delivery</h2>
+
+      <a href="/login.html">Login</a>
+      <a href="/register.html">Register</a>
+      <a href="/orders.html">View Orders</a>
+      <a href="/admin.html">Admin Analytics Board</a>
+      <a href="/track.html">Track Orders</a>
+
+      <p class="quote">“Clean clothes, clean mind, clean spirit.”</p>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("logout") === "true") {
+      const msg = document.createElement("p");
+      msg.textContent = "You have been logged out successfully.";
+      msg.style.color = "lightgreen";
+      msg.style.textAlign = "center";
+      msg.style.marginBottom = "10px";
+      document.querySelector(".container").prepend(msg);
+    }
+  </script>
+</body>
+</html>
